@@ -24,6 +24,7 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 * Google maps API (https://developers.google.com/maps/)
 
 *Lista ce biti dopunjena kada projekat bude u procesu izrade*
+
 ---
 ### 👥 Tim
 * Marko Jovanovic 062/14 (fr1sk@live.com)
