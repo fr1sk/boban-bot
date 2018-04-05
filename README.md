@@ -22,6 +22,7 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 * Matf API - mokovan api matematickog fakulteta
 * Schedule - lib za cron poslove (https://github.com/dbader/schedule)
 * Google maps API (https://developers.google.com/maps/)
+
 *Lista ce biti dopunjena kada projekat bude u procesu izrade*
 ---
 ### 👥 Tim
