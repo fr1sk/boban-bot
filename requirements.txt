@@ -3,3 +3,8 @@ Flask==0.11.1
 gunicorn==19.6.0
 pylint==1.7.4
 python-dotenv==0.8.2
+pyzbar==0.1.7
+zbar==0.10
+scikit-image==0.9.3
+schedule==0.4.3
+python-i18n==0.3.1

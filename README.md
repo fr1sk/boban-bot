@@ -7,11 +7,10 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 ---
 ### 🧠 Opcije 
 
-* Raspored - pesonalizovani raspored za svakog studenta
 * Manje ceknaje reda u studentkoj sluzbi - skeniranjem QR koda (koji ce se nalaziti kod Bobana u sluzbi) dobijate jedinstveni broj u redu tako da ne morate fizicki da cekate vec se cekanje odvija kroz chatbota. 
 * Koliko mi treba do Bobana (ako ste vec u redu) - slanjem trenutne lokacije chatbotu on ce odredi udaljenost od studentske sluzbe i proceni vreme koje ce vam biti potrebno da stignete do sluzbe.
 * Podsetnik da krenete ka Bobanu - podsetnik da uskoro vi stizete na red i da treba da krenete ka Bobanu. 
-* Podsetnik za sutrasnji raspored - svako vece Boban ce vam reci koje predmete imate sutra i na vreme vas obavestiti o tome
+
 ---
 ### 👨🏻‍💻Tehnologije / API / Biblioteke
 * Python

@@ -1,8 +1,11 @@
+# settings.py
+import logging
 
+def init():
+    global log 
+    # Get the top-level logger object
+    log = logging.getLogger()
 
-# OR, the same with increased verbosity:
-# load_dotenv(verbose=True)
-
-# # OR, explicitly providing path to '.env'
-# env_path = Path('.') / '.env'
-# load_dotenv(dotenv_path=env_path)
+    # make it print to the console.
+    console = logging.StreamHandler()
+    log.addHandler(console)
