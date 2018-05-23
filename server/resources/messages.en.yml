@@ -1,6 +1,6 @@
 en:
   "getStartedButton":
-    text: "Zdravo %{ime}, ja sam Boban! ^_^"
+    text: "Zdravo %{ime}, ja sam BobanBot! ^_^"
   "qrResults":
     noQR: "Ovo bas i ne izgleda kao QR kod :|"
   "default":

@@ -17,7 +17,7 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 * Flask (http://flask.pocoo.org/)
 * Messenger API (https://developers.facebook.com/docs/messenger-platform)
 * FBMQ - messenger api wrapper (https://github.com/conbus/fbmq)
-* Wit.AI || dialogflow - NLP (http://wit.ai/ || https://dialogflow.com/)
+* Wit.AI - NLP (http://wit.ai/)
 * Matf API - mokovan api matematickog fakulteta
 * Schedule - lib za cron poslove (https://github.com/dbader/schedule)
 * Google maps API (https://developers.google.com/maps/)

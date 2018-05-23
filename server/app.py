@@ -39,8 +39,11 @@ def webhook():
     data = request.get_json()
     print "req data: ", data
     isImage, senderId, imgUrl = m.isImage(data)
+    isLocation, senderId, lat, long = m.isLocation(data)
     if isImage:
         m.handleImage(page, senderId, imgUrl)
+    elif isLocation:
+		m.handleLocation(page, senderId, lat, long)
     return "ok"
 
 @page.after_send
