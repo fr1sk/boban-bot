@@ -1,8 +1,10 @@
-import i18n, urllib2, json
+import i18n, urllib2, json, os
+import settings as s
 
 def readTextFromYML(path, **kwargs):
-    i18n.load_path.append('../../resources/')
-    return i18n.t("text."+path, **kwargs)
+    i18n.load_path.append('./resources/')
+    print path
+    return i18n.t("messages."+path, **kwargs)
 
 def getUserInfo(senderId, token):
     url = "https://graph.facebook.com/"+senderId+"?fields=first_name,last_name,gender,profile_pic&access_token="+token

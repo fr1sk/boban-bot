@@ -1,4 +1,4 @@
-import sys, i18n
+import sys, i18n, os
 sys.path.append('../../') 
 import api.utils.qrHandler as qr
 import api.utils.functions as f
@@ -27,4 +27,7 @@ def handleImage(page, senderId, url):
     else:
         page.send(senderId, f.readTextFromYML('qrResults.noQR'))
 
+def getStartedHandler(page, senderId):
+    gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['PAGE_ACCESS_TOKEN'])
+    page.send(senderId, f.readTextFromYML('getStartedButton.text', ime = fName))
 

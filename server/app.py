@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from fbmq import Page, Template
 import api.conversation.conversation as m
 import api.utils.functions as f
+import settings as s
 # from api.conversation.conversation import handleQrCode
 
 #encoding conf
@@ -56,28 +57,25 @@ def message_handler(event):
 	print "\n\n"
 	print repr(event)
 	if message:
-		gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['BOT_ID'])
+		gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['PAGE_ACCESS_TOKEN'])
 		page.send(senderId, f.readTextFromYML('default.text', ime = fName))
 
 @page.callback(['START_PAYLOAD'])
 def start_callback(payload, event):
 	print("====== GET STARTED PAYLOAD ======")
 	senderId = event.sender_id
-	gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['BOT_ID'])
-	page.send(senderId, f.readTextFromYML('getStartedButton.text', ime = fName))
-	
-
+	m.getStartedHandler(page, senderId)
 
 @app.route('/get-webhook-key', methods=['GET'])
 def key():
 	print 'ok'
-	return os.getenv('PAGE_ACCESS_TOKEN')
-	
+	return os.getenv('PAGE_ACCESS_TOKEN')	
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8081))
     print "*************************************"
     print "*          DEPLOYMENT DONE          *"
     print "*************************************"
+    s.app = app
     sys.stdout.flush()
     app.run(debug=True, host='0.0.0.0', port=port)
