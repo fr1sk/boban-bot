@@ -7,6 +7,7 @@ from fbmq import Page, Template
 import api.conversation.conversation as m
 import api.utils.functions as f
 import settings as s
+from flask_pymongo import PyMongo
 # from api.conversation.conversation import handleQrCode
 
 #encoding conf
@@ -15,10 +16,12 @@ sys.setdefaultencoding('UTF8')
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 logger = logging.getLogger(__name__)
 load_dotenv(dotenv_path='.env')
 sys.stdout.flush()
 page = Page(os.environ.get('PAGE_ACCESS_TOKEN'))
+mongo = PyMongo(app)
 
 
 @app.route('/', methods=['PAGE_ACCESS_TOKEN'])
@@ -35,7 +38,6 @@ page.show_starting_button("START_PAYLOAD")
 def webhook():
     sys.stdout.flush()
     print "WEBHOOK CALLED - /"
-    page.handle_webhook(request.get_data(as_text=False))
     data = request.get_json()
     print "req data: ", data
     isImage, senderId, imgUrl = m.isImage(data)
@@ -44,6 +46,8 @@ def webhook():
         m.handleImage(page, senderId, imgUrl)
     elif isLocation:
 		m.handleLocation(page, senderId, lat, long)
+    else:
+        page.handle_webhook(request.get_data(as_text=False))
     return "ok"
 
 @page.after_send
@@ -80,5 +84,6 @@ if __name__ == "__main__":
     print "*          DEPLOYMENT DONE          *"
     print "*************************************"
     s.app = app
+    s.mongo = mongo
     sys.stdout.flush()
     app.run(debug=True, host='0.0.0.0', port=port)

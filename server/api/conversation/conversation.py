@@ -3,6 +3,8 @@ sys.path.append('../../')
 import api.utils.qrHandler as qr
 import api.utils.functions as f
 import api.utils.map as m
+import settings as s
+# import api.models.student as Student
 
 def isImage(data):
     if data['object'] == 'page':
@@ -16,7 +18,7 @@ def isImage(data):
                                 print "URL: ", messaging['message']['attachments'][0]['payload']['url']
                                 return True, senderId, messaging['message']['attachments'][0]['payload']['url']
  
-    return False, senderId, None
+                    return False, senderId, None
 
 def isLocation(data):
     if data['object'] == 'page':
@@ -31,7 +33,7 @@ def isLocation(data):
                                 long = messaging['message']['attachments'][0]['payload']['coordinates']['long']
                                 return True, senderId, lat, long
  
-    return False, senderId, None, None
+                    return False, senderId, None, None
 
 def handleImage(page, senderId, url):
     img = qr.loadImgFromUrl(url)
@@ -45,6 +47,22 @@ def handleImage(page, senderId, url):
 
 def getStartedHandler(page, senderId):
     gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['PAGE_ACCESS_TOKEN'])
+    Student = s.mongo.db.students 
+    
+    if Student.count({'senderId':senderId}) != 1:
+        student = {
+            'lastName': lName,
+            'firstName': fName,
+            'gender': gender,
+            'photo': pic,
+            'inQueue': False,
+            'senderId': senderId
+        }
+        Student.insert(student)
+        Student.save(student)
+        print '=> STUDENT SAVED', senderId
+    else:
+        print '=> STUDENT ALREADY EXISTS', senderId
     page.send(senderId, f.readTextFromYML('getStartedButton.text', ime = fName))
 
 def handleLocation(page, senderId, lat, long):
