@@ -18,13 +18,19 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 * Messenger API (https://developers.facebook.com/docs/messenger-platform)
 * FBMQ - messenger api wrapper (https://github.com/conbus/fbmq)
 * Wit.AI - NLP (http://wit.ai/)
-* Matf API - mokovan api matematickog fakulteta
 * Schedule - lib za cron poslove (https://github.com/dbader/schedule)
 * Google maps API (https://developers.google.com/maps/)
 
 *Lista ce biti dopunjena kada projekat bude u procesu izrade*
 
 ---
+### 💼 TODO
+* DB
+* Bot Flow
+
+### 💅🏻Demo
+
+
 ### 👥 Tim
 * Marko Jovanovic 062/14 (fr1sk@live.com)
 * Stevan Djokic
