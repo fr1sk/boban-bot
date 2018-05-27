@@ -3,5 +3,35 @@ en:
     text: "Zdravo %{ime}, ja sam BobanBot! ^_^"
   "qrResults":
     noQR: "Ovo bas i ne izgleda kao QR kod :|"
+    badQR: "Da, ovo je QR kod ali ne Bobanov >:O"
+    success: "Kod prhvacen! Dobrodosao u Bobanov red"
+    after: "Potrebno mi je jos par informacija kako bi Bobanu olaksali posao ^_^"
+    index: "Kazi mi svoj broj indeksa"
   "default":
     text: "Izvini %{ime}, ali ne razumem tvoje pitanje :("
+  "firstMsg": 
+    text: "Kada budes u studentskoj sluzbi, klikni na dugme ispod kako bi se pridruzio redu!"
+    btn1: "Stani u red"
+    pl1: "PAYLOAD_QUEUE"
+    btn2: "Kako da te koristim?"
+    pl2: "PAYLOAD_HELP"
+  "helpMsg":
+    text0: "Poznata situacija? Potrudicu se da se to promenim (y)"
+    text1: "Ja sam Bobanova desna ruka i tu sam da pomognem! ^_^\n• Smanjujem guzvu ispred studentske sluzbe\n• Podsecam te kada da krenes ka Bobanu\n• Znam koliko ti vremena treba do njega\n"
+    text2: "Ja cu te smestiti u Bobanov red, ali prvo moras skenirati QR kod koji se nalazi na oglasnoj tabli u studentskoj sluzbi."
+    text3: "Nastavi ili potrazi pomoc od pravog Bobana: "
+    btn1: "Pozovi pravog Bobana"
+    pl1: "+381112027818"
+    btn2: "Hajde da nastavimo!"
+    pl2: "FIRST_MESSAGE_PAYLOAD"
+  "scanQr":
+    text: "Slikaj QR kod kamerom, a ja cu te dodati u red! ^_^"
+  "leaveQueue":
+    text: "Ali ti si vec u redu! :O Red uvek mozes napustiti iz desnog menija (ali naljutices Bobana)"
+  "notInQueue":
+    text: "Ne mozes napustiti red ako nisi u njemu :|"
+  "queueLeft":
+    text: "Ok, uspesno si napustio red. Boban place zbog tvoje odluke :'("
+  "queue":
+    first: "Red je prazan i Boban te zeljno iscekuje ^_^"
+    location: "Ukoliko ne zelis fizicki da cekas u redu, posalji mi svoju lokaciju kako bih ti rekao kada da krenes ka Bobanu"

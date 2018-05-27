@@ -33,6 +33,11 @@ def verify(): # verify webhook
     return 'Hello from the backend side!' , 200
 
 page.show_starting_button("START_PAYLOAD")
+page.show_persistent_menu([
+    Template.ButtonPostBack('Napusti red', 'PAYLOAD_LEAVE_QUEUE'),
+    Template.ButtonPostBack('Pomoc', 'PAYLOAD_HELP'),
+    Template.ButtonWeb('Poseti MATF Hypatiu', 'https://hypatia.matf.bg.ac.rs:10333/StudInfo/scripts/studenti/prijavljivanjeFormular'),
+    ])
 
 @app.route('/', methods=['POST'])
 def webhook():
@@ -42,12 +47,13 @@ def webhook():
     print "req data: ", data
     isImage, senderId, imgUrl = m.isImage(data)
     isLocation, senderId, lat, long = m.isLocation(data)
-    if isImage:
-        m.handleImage(page, senderId, imgUrl)
-    elif isLocation:
-		m.handleLocation(page, senderId, lat, long)
-    else:
-        page.handle_webhook(request.get_data(as_text=False))
+    if senderId:
+        if isImage:
+            m.handleImage(page, senderId, imgUrl)
+        elif isLocation:
+            m.handleLocation(page, senderId, lat, long)
+        else:
+            page.handle_webhook(request.get_data(as_text=False))
     return "ok"
 
 @page.after_send
@@ -72,6 +78,30 @@ def start_callback(payload, event):
 	print("====== GET STARTED PAYLOAD ======")
 	senderId = event.sender_id
 	m.getStartedHandler(page, senderId)
+
+@page.callback(['PAYLOAD_HELP'])
+def help_callback(payload, event):
+	print("====== PAYLOAD_HELP ======")
+	senderId = event.sender_id
+	m.sendHelp(page, senderId)
+
+@page.callback(['PAYLOAD_QUEUE'])
+def queue_callback(payload, event):
+	print("====== PAYLOAD_QUEUE ======")
+	senderId = event.sender_id
+	m.sendQueueInfo(page, senderId)
+
+@page.callback(['PAYLOAD_LEAVE_QUEUE'])
+def leave_queue_callback(payload, event):
+	print("====== PAYLOAD_LEAVE_QUEUE ======")
+	senderId = event.sender_id
+	m.removeUserFromQueue(page, senderId)
+
+@page.callback(['FIRST_MESSAGE_PAYLOAD'])
+def firstMessage(payload, event):
+	print("====== FIRST_MESSAGE_PAYLOAD ======")
+	senderId = event.sender_id
+	m.firstMessage(page, senderId)
 
 @app.route('/get-webhook-key', methods=['GET'])
 def key():

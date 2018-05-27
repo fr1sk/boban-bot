@@ -16,6 +16,6 @@ def decodeQrFromImg(im):
 def loadImgFromUrl(url):
     return io.imread(url)
   
-  
+
   #display(im, decodedObjects)
 
