@@ -75,8 +75,15 @@ def getStartedHandler(page, senderId):
         print '=> STUDENT SAVED', senderId
     else:
         print '=> STUDENT ALREADY EXISTS', senderId
+        student = Student.find_one({'senderId': str(senderId)})
+        student['inQueue'] = False
+        Student.save(student)
     
     page.typing_on(senderId)
+    time.sleep(1)
+    bot = Bot(os.environ['PAGE_ACCESS_TOKEN'])
+    bot.send_image_url(senderId, "https://preview.ibb.co/b1cRVo/33765911_1773323739425232_1578763225627885568_n.jpg")
+    time.sleep(1)
     page.send(senderId, f.readTextFromYML('getStartedButton.text', ime = fName))
     firstMessage(page, senderId)
 
@@ -111,15 +118,22 @@ def sendQueueInfo(page, senderId):
 
 
 def handleLocation(page, senderId, lat, long):
-    loc, time = m.getLocationData(lat, long)
-    page.send(senderId, "Sa tvoje lokacije, "+loc + ", treba ti " + time + " do Bobana! :)")
-    addTimeToDB(page, senderId, time)
+    loc, waitTime = m.getLocationData(lat, long)
+    page.send(senderId, "Sa tvoje lokacije, "+loc + ", treba ti " + waitTime + " do Bobana! :)")
+    addTimeToDB(page, senderId, waitTime)
 
-def addTimeToDB(page, senderId, time):
+def addTimeToDB(page, senderId, waitTime):
     Student = s.mongo.db.students
     student = Student.find_one({'senderId': str(senderId)})
-    student['time'] = str(int(time))
+    student['time'] = str(waitTime)
     Student.save(student)
+    page.typing_on(senderId)
+    time.sleep(1)
+    bot = Bot(os.environ['PAGE_ACCESS_TOKEN'])
+    bot.send_image_url(senderId, "https://media.giphy.com/media/xT0BKyzsIglmWE8oDK/giphy.gif")
+    time.sleep(2)
+    page.send(senderId, f.readTextFromYML('queue.last'))
+    page.typing_off(senderId)
 
 
 def addUserToQueue(page, senderId):
@@ -135,9 +149,13 @@ def addUserToQueue(page, senderId):
         print line
         page.typing_on(senderId)
         time.sleep(2)
+        bot = Bot(os.environ['PAGE_ACCESS_TOKEN'])
+        bot.send_image_url(senderId, "https://media.giphy.com/media/xT5LMuHy92KbOfnd8A/giphy.gif")
+        time.sleep(2)
         page.send(senderId, f.readTextFromYML('qrResults.success'))
         time.sleep(1)
-        page.send(senderId, "Trenutno si "+str(len(line)) +". u redu :)")
+        indexInLine = line.index(str(senderId))+1
+        page.send(senderId, "Trenutno si "+ str(indexInLine) +". u redu :)")
         # time.sleep(1)
         # page.send(senderId, f.readTextFromYML('qrResults.after'))
         # time.sleep(1)
