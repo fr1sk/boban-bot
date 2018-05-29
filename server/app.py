@@ -56,6 +56,12 @@ def webhook():
             page.handle_webhook(request.get_data(as_text=False))
     return "ok"
 
+@app.route('/boban', methods=['GET'])
+def dashboard():
+    Student = s.mongo.db.students
+    student = Student.find({'inQueue': True})
+    return JsonResponse(student, status=200)
+
 @page.after_send
 def after_send(payload, response):
     sys.stdout.flush()

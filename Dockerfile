@@ -12,3 +12,4 @@ WORKDIR /home/app/server/
 EXPOSE 8081
 ENTRYPOINT [ "python" ]
 CMD [ "app.py" ]
+# CMD ["gunicorn",  "app:app"]
