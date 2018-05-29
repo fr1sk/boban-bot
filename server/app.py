@@ -60,7 +60,7 @@ def webhook():
 def dashboard():
     Student = s.mongo.db.students
     student = Student.find({'inQueue': True})
-    return JsonResponse(student, status=200)
+    # return JsonResponse(student, status=200)
 
 @page.after_send
 def after_send(payload, response):
