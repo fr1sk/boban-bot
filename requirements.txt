@@ -11,3 +11,4 @@ python-i18n[YAML]==0.3.1
 googlemaps==2.5.1
 Flask-PyMongo==0.5.2
 pymessenger2==3.0.5
+numpy==1.14.3
