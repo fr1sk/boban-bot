@@ -134,21 +134,21 @@ def addTimeToDB(page, senderId, waitTime):
     student['time'] = onlyTime
     print onlyTime
     milliTime = f.convert_milli_time(onlyTime)
-    # student['reminderTime'] = int(student['reminderTime']) - milliTime
+    student['reminderTime'] = int(student['reminderTime']) - milliTime
     Student.save(student)
     page.typing_on(senderId)
     time.sleep(1)
     bot = Bot(os.environ['PAGE_ACCESS_TOKEN'])
     print int(student['reminderTime']), f.current_milli_time() 
-    # if int(student['reminderTime']) <= f.current_milli_time():
-    #     page.send(senderId, f.readTextFromYML('queue.nogo')) 
-        # student['reminderTime'] = ''
-        # Student.save(student)
-    # else:
-    bot.send_image_url(senderId, "https://media.giphy.com/media/xT0BKyzsIglmWE8oDK/giphy.gif")
-    time.sleep(2)
-    page.send(senderId, f.readTextFromYML('queue.last'))
-    page.typing_off(senderId)
+    if int(student['reminderTime']) <= f.current_milli_time():
+        page.send(senderId, f.readTextFromYML('queue.nogo')) 
+        student['reminderTime'] = ''
+        Student.save(student)
+    else:
+        bot.send_image_url(senderId, "https://media.giphy.com/media/xT0BKyzsIglmWE8oDK/giphy.gif")
+        time.sleep(2)
+        page.send(senderId, f.readTextFromYML('queue.last'))
+        page.typing_off(senderId)
 
 
 def addUserToQueue(page, senderId):

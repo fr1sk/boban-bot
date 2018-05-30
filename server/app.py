@@ -137,10 +137,6 @@ def reminder():
             st['reminderTime'] = ''
             Student.save(st)
 
-    # izvuci sve iz baze koji su u redu i cije je vreme cekanja duze 3 min
-    # u bazu upamti vreme do bobana + 3 * br ljudi ispred
-    # u reminderu proveri da li je trenutno vreme > od vreme do bobana + 2 * br ljudiudi
-
 thread = Thread(target = pending, args = ())
 thread.start()
 schedule.every(1).minutes.do(reminder)
