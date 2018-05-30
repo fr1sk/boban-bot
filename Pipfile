@@ -2,16 +2,16 @@
 python_version = '2.7'
 
 [packages]
-fbmq = "*"
-Flask = "*"
-Flask-PyMongo = "*"
-gunicorn = "*"
-pylint = "*"
-python-dotenv = "*"
-pyzbar = "*"
-zbar = "*"
-scikit-image = "*"
-schedule = "*"
-python-i18n[YAML] = "*"
-googlemaps = "*"
-pymessenger2 = "*"
+fbmq = '*'
+Flask = '*'
+Flask-PyMongo = '*'
+gunicorn = '*'
+pylint = '*'
+python-dotenv = '*'
+pyzbar = '*'
+zbar = '*'
+scikit-image = '*'
+schedule = '*'
+python-i18n[YAML] = '*'
+googlemaps = '*'
+pymessenger2 = '*'
