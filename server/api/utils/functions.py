@@ -2,6 +2,7 @@ import i18n, urllib2, json, os
 import settings as s
 import json
 import requests
+import time
 
 
 def readTextFromYML(path, **kwargs):
@@ -19,6 +20,8 @@ def getUserInfo(senderId, token):
     except:
         return "", "", "", ""
 
+def convert_milli_time(x):
+	return int(round(x * 100)) 
 
 def sendImage(senderId, url):
 	headers = {
@@ -43,4 +46,6 @@ def sendImage(senderId, url):
 	print "RESPONSE FROM IMAGE ", str(r.status_code)
 
 
+
+current_milli_time = lambda: int(round(time.time() * 1000))
 

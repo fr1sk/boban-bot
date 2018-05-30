@@ -1,6 +1,10 @@
 import sys
 import os
 import logging
+import datetime
+import time
+import schedule
+import threading
 from flask import Flask, request
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
@@ -8,6 +12,7 @@ from fbmq import Page, Template
 import api.conversation.conversation as m
 import api.utils.functions as f
 import settings as s
+from threading import Thread
 
 # from api.conversation.conversation import handleQrCode
 
@@ -25,7 +30,7 @@ page = Page(os.environ.get('PAGE_ACCESS_TOKEN'))
 mongo = PyMongo(app)
 
 
-@app.route('/', methods=['PAGE_ACCESS_TOKEN'])
+@app.route('/', methods=['GET'])
 def verify(): # verify webhook
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
         if not request.args.get("hub.verify_token") == os.getenv('WEBHOOK_KEY'):
@@ -108,6 +113,38 @@ def firstMessage(payload, event):
 def key():
 	print 'ok'
 	return os.getenv('PAGE_ACCESS_TOKEN')	
+
+@app.route('/next', methods=['GET'])
+def sledeci():
+	print 'ok'
+	return os.getenv('PAGE_ACCESS_TOKEN')
+
+
+def pending():
+    while True:
+        schedule.run_pending()
+        print "time: ", datetime.datetime.now(), threading.current_thread()
+        time.sleep(30)
+        sys.stdout.flush()
+
+
+def reminder():
+    Student = s.mongo.db.students
+    student = Student.find({'inQueue': True})
+    for st in student:
+        if st['reminderTime'] != '' and int(st['reminderTime']) <= f.current_milli_time():
+            page.send(int(st['senderId']), f.readTextFromYML('queue.go'))
+            st['reminderTime'] = ''
+            Student.save(st)
+
+    # izvuci sve iz baze koji su u redu i cije je vreme cekanja duze 3 min
+    # u bazu upamti vreme do bobana + 3 * br ljudi ispred
+    # u reminderu proveri da li je trenutno vreme > od vreme do bobana + 2 * br ljudiudi
+
+thread = Thread(target = pending, args = ())
+thread.start()
+schedule.every(1).minutes.do(reminder)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 80))

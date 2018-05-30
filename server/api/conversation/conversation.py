@@ -43,19 +43,24 @@ def isLocation(data):
     return None, None, None, None
 
 def handleImage(page, senderId, url):
-    img = qr.loadImgFromUrl(url)
-    qrRes = qr.decodeQrFromImg(img)
-    if qrRes:
-        for obj in qrRes:
-            if obj.type == 'QRCODE':
-                print senderId, 'QR DATA: ', obj.data, os.environ['BOBAN_QR'],obj.data == os.environ['BOBAN_QR']
-                print os.environ['BOBAN_QR']
-                if obj.data == os.environ['BOBAN_QR']:
-                    addUserToQueue(page, senderId)
-                else:
-                    page.send(senderId, f.readTextFromYML('qrResults.badQR'))
-                return
-    page.send(senderId, f.readTextFromYML('qrResults.noQR'))
+    if senderId != '328681360989977':
+        Student = s.mongo.db.students
+        student = Student.find_one({'senderId': str(senderId)})
+        print senderId
+        img = qr.loadImgFromUrl(url)
+        qrRes = qr.decodeQrFromImg(img)
+        if qrRes:
+            for obj in qrRes:
+                if obj.type == 'QRCODE':
+                    print senderId, 'QR DATA: ', obj.data, os.environ['BOBAN_QR'],obj.data == os.environ['BOBAN_QR']
+                    print os.environ['BOBAN_QR']
+                    if obj.data == os.environ['BOBAN_QR']:
+                        addUserToQueue(page, senderId)
+                    else:
+                        page.send(senderId, f.readTextFromYML('qrResults.badQR'))
+                    return
+        if not student['inQueue']:
+            page.send(senderId, f.readTextFromYML('qrResults.noQR'))
 
 def getStartedHandler(page, senderId):
     gender, fName, lName, pic = f.getUserInfo(senderId, os.environ['PAGE_ACCESS_TOKEN'])
@@ -125,11 +130,21 @@ def handleLocation(page, senderId, lat, long):
 def addTimeToDB(page, senderId, waitTime):
     Student = s.mongo.db.students
     student = Student.find_one({'senderId': str(senderId)})
-    student['time'] = str(waitTime)
+    onlyTime = int(filter(str.isdigit, str(waitTime)))
+    student['time'] = onlyTime
+    print onlyTime
+    milliTime = f.convert_milli_time(onlyTime)
+    # student['reminderTime'] = int(student['reminderTime']) - milliTime
     Student.save(student)
     page.typing_on(senderId)
     time.sleep(1)
     bot = Bot(os.environ['PAGE_ACCESS_TOKEN'])
+    print int(student['reminderTime']), f.current_milli_time() 
+    # if int(student['reminderTime']) <= f.current_milli_time():
+    #     page.send(senderId, f.readTextFromYML('queue.nogo')) 
+        # student['reminderTime'] = ''
+        # Student.save(student)
+    # else:
     bot.send_image_url(senderId, "https://media.giphy.com/media/xT0BKyzsIglmWE8oDK/giphy.gif")
     time.sleep(2)
     page.send(senderId, f.readTextFromYML('queue.last'))
@@ -167,6 +182,14 @@ def addUserToQueue(page, senderId):
         else:
             numOfStudents = len(line) - 1
             waitTime = numOfStudents * 3
+            
+            millis = f.current_milli_time()
+            print millis
+            Student = s.mongo.db.students
+            student = Student.find_one({'senderId': str(senderId)})
+            student['reminderTime'] = millis
+            Student.save(student)
+
             page.send(senderId, 
                 "Trenutno je ispred tebe "+str(numOfStudents)+" studenta, procenjeno vreme cekanja je "+str(waitTime)+" minuta")
             page.send(senderId, f.readTextFromYML('queue.location'))

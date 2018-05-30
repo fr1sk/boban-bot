@@ -20,5 +20,4 @@ def getLocationData(lat, long):
     # print directions['origin_addresses'][0]
     yourLocation, b, c = directions['origin_addresses'][0].split(',')
     time = directions['rows'][0]['elements'][0]['duration']['text']
-    print yourLocation, time
     return yourLocation, time
