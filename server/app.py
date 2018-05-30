@@ -2,12 +2,13 @@ import sys
 import os
 import logging
 from flask import Flask, request
+from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from fbmq import Page, Template
 import api.conversation.conversation as m
 import api.utils.functions as f
 import settings as s
-from flask_pymongo import PyMongo
+
 # from api.conversation.conversation import handleQrCode
 
 #encoding conf
@@ -109,7 +110,7 @@ def key():
 	return os.getenv('PAGE_ACCESS_TOKEN')	
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8081))
+    port = int(os.environ.get('PORT', 80))
     print "*************************************"
     print "*          DEPLOYMENT DONE          *"
     print "*************************************"

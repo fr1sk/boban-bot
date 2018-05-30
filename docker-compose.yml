@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+   web:
+    container_name: boban-bot-2
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:8081
+    volumes:
+      - './:/home/app/'
+    environment:
+      - FLASK_APP=./server/app.py
+      - FLASK_DEBUG=1
+      - WEBHOOK_KEY=boban_zmaj
+      - PAGE_ACCESS_TOKEN=EAADnf79s6a4BAPH5IZB2iYH9YPwZBt9ZBQ7kTYtwjuekcH6ZCyBz3sgPnLKFwPFKSoe0vbR48JSXPJy7sN9X3xOIAa0Li5oHJGTwwKvilt4qZB9mHDyErdu33FxSdzlsPmEVZAUInyBaYOPSK2qpPPgAbZCfZAxjYrsqd8wv5uUZBrQZDZD
+      - API_KEY=AIzaSyDvLz0X9RODAjO8LC8p3CA11hj97zyZZHA
+      - ENDPOINT=https://maps.googleapis.com/maps/api/distancematrix/json?
+      - MATF_LOCATION='44.8195126,20.45931500000006'
+      - MONGO_URI=mongodb://admin:bobanzmaj@ds135810.mlab.com:35810/boban-bot
+      - BOBAN_QR=kqDrxhgxPdA6xwPYGXCyYqVhnwYezLYANQWZEc
