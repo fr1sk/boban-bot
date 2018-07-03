@@ -29,7 +29,7 @@ Ideja Boban bota je da pomogne i studentima i Bobanu tako sto ce poboljsati efik
 * Bot Flow
 
 ### 💅🏻Demo
-
+![Bot Demo](/demo/1.jpg)
 
 ### 👥 Tim
 * Marko Jovanovic 062/14 (fr1sk@live.com)
